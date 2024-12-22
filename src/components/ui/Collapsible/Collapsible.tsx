@@ -25,9 +25,9 @@ export type CollapsibleProps = {
   open?: boolean;
   title?: string;
   trigger?: ReactNode;
-  items: { content: any }[];
+  items: { content: string | ReactNode }[];
   disabled?: boolean;
-  defaultOpen?: { content: any };
+  defaultOpen?: { content: string | ReactNode };
   onOpenChange?: Dispatch<SetStateAction<boolean>>;
 } & PropsWithChildren;
 
@@ -37,7 +37,7 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
 
   
   // Disable or enable collapse
-  const disabled = props.disabled;
+  const disabled = props.disabled ?? false;
 
   // Title for the component
   const title = props.title;
@@ -51,15 +51,16 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
     <CollapsibleRoot
       open={props.open ?? open}
       onOpenChange={props.onOpenChange ?? onOpenChange}
+      disabled={disabled}
     >
       <CollapsibleHeader title={title}>
         {/* Button */}
-        {!disabled && (
+        
           <CollapsibleTrigger asChild >
             {props.trigger && props.trigger}
             
           </CollapsibleTrigger>
-        )}
+       
       </CollapsibleHeader>
 
       {/* Conditonal Loop */}
@@ -77,11 +78,9 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
           {/* Collapsable Content  */}
           <CollapsibleContent state={props.open ?? open}>
             {items.map((item, index) => (
-              <>
-                {item != defaultOpen && (
-                  <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
-                )}
-              </>
+              item !== defaultOpen && (
+                <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
+              )
             ))}
           </CollapsibleContent>
         </>

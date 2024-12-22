@@ -41,10 +41,17 @@ describe("Collapsible Component", () => {
     });
 
     it("disables collapsible when disabled prop is true", () => {
-        const { getByText } = render(
-            <Collapsible disabled={true} items={[{ content: "Item 1" }]} />
-        );
-        expect(getByText("Item 1")).toBeInTheDocument();
+      const { getByText, queryByText } = render(
+        <Collapsible
+          disabled={true}
+          trigger={<button>Toggle</button>}
+          items={[{ content: "Item 1" }]}
+        />
+      );
+      const trigger = getByText("Toggle");
+      const initialState = queryByText("Item 1");
+      fireEvent.click(trigger);
+      expect(queryByText("Item 1")).toBe(initialState); // Content state should not change
     });
 
     it("renders default open content when provided", () => {
@@ -58,55 +65,7 @@ describe("Collapsible Component", () => {
 });
 
 
-describe("Collapsible Component", () => {
-    it("renders without crashing", () => {
-        const { getByText } = render(
-            <Collapsible items={[{ content: "Item 1" }]} />
-        );
-        expect(getByText("Item 1")).toBeInTheDocument();
-    });
 
-    it("renders title when provided", () => {
-        const { getByText } = render(
-            <Collapsible title="Test Title" items={[{ content: "Item 1" }]} />
-        );
-        expect(getByText("Test Title")).toBeInTheDocument();
-    });
-
-    it("renders trigger when provided", () => {
-        const { getByText } = render(
-            <Collapsible trigger={<button>Toggle</button>} items={[{ content: "Item 1" }]} />
-        );
-        expect(getByText("Toggle")).toBeInTheDocument();
-    });
-
-    it("toggles content visibility on trigger click", () => {
-        const { getByText, queryByText } = render(
-            <Collapsible trigger={<button>Toggle</button>} items={[{ content: "Item 1" }]} />
-        );
-        const trigger = getByText("Toggle");
-        fireEvent.click(trigger);
-        expect(queryByText("Item 1")).not.toBeInTheDocument();
-        fireEvent.click(trigger);
-        expect(queryByText("Item 1")).toBeInTheDocument();
-    });
-
-    it("disables collapsible when disabled prop is true", () => {
-        const { getByText } = render(
-            <Collapsible disabled={true} items={[{ content: "Item 1" }]} />
-        );
-        expect(getByText("Item 1")).toBeInTheDocument();
-    });
-
-    it("renders default open content when provided", () => {
-        const { getByText } = render(
-            <Collapsible defaultOpen={{ content: "Default Item" }} items={[{ content: "Item 1" }]} />
-        );
-        expect(getByText("Default Item")).toBeInTheDocument();
-    });
-
-     
-});
 
 describe("CollapsibleHeader Component", () => {
     it("renders title", () => {

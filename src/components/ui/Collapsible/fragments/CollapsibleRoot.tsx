@@ -14,9 +14,10 @@ export type CollapsibleRootProps = {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
   className?: string
+  disabled?: boolean
 };
 
-const CollapsibleRoot = ({children,className="", customRootClass, open, onOpenChange}: CollapsibleRootProps) => {
+const CollapsibleRoot = ({children,className="",disabled, customRootClass, open, onOpenChange}: CollapsibleRootProps) => {
 
     const rootClass = customClassSwitcher(customRootClass,COMPONENT_NAME)
   
@@ -25,7 +26,8 @@ const CollapsibleRoot = ({children,className="", customRootClass, open, onOpenCh
     value={{
         rootClass,
         open,
-        onOpenChange
+        onOpenChange,
+        disabled
     }}
     ><div className={clsx(`${rootClass}-root`,className)}>
         {children}</div></CollapsibleContext.Provider>

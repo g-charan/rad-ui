@@ -47,17 +47,34 @@ type CollapsibleTriggerProps = {
 
 
 const CollapsibleTrigger = ({children, asChild=false}: CollapsibleTriggerProps) => {
-    const {rootClass,open,onOpenChange} = useContext(CollapsibleContext)
-      const toggleCollapse = () => onOpenChange && onOpenChange((p) => (!p))
+    const {rootClass,open,onOpenChange,disabled} = useContext(CollapsibleContext)
+      const toggleCollapse = () => onOpenChange && !disabled && onOpenChange((p) => (!p))
 
-   
+      
   return (
-    <div className={clsx(`${rootClass}-trigger`)} onClick={toggleCollapse}>
-      {asChild? children: <ButtonPrimitive>
-                      {open ? <CollapseIcon /> : <ExpandIcon />}
-                    </ButtonPrimitive>}
-        
-
+    <div
+      className={clsx(`${rootClass}-trigger`)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleCollapse();
+        }
+      }}
+      aria-expanded={open}
+      onClick={
+      
+         toggleCollapse
+      }
+    >
+      {asChild ? (
+        children
+      ) : (
+        <ButtonPrimitive>
+          {open ? <CollapseIcon /> : <ExpandIcon />}
+        </ButtonPrimitive>
+      )}
     </div>
   );
 }
