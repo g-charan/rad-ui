@@ -60,7 +60,7 @@ export const ExternalTrigger = () => {
           items={Items}
           defaultOpen={Items[0]}
           trigger={
-            <Button onClick={toggleHidden} style={{ margin: "0" }}>
+            <Button  style={{ margin: "0" }}>
               {open ? "CLOSE" : "OPEN"}
             </Button>
           }

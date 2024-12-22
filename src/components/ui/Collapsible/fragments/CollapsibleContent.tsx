@@ -16,12 +16,9 @@ const CollapsibleContent: React.FC<CollapsibleContentProps> = ({children,classNa
       <div
         className={clsx(`${rootClass}-content`, className)}
         aria-hidden={!state}
-        style={{
-          overflow: "hidden",
-          height: (state) ? "auto" : "0",
-        }}
+        data-state={state? "expanded" : "collapsed"}
       >
-        {children}
+        {state && children}
       </div>
     );
 }

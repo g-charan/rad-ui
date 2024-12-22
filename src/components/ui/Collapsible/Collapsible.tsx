@@ -1,11 +1,12 @@
 import React, {
-    Dispatch,
-    PropsWithChildren,
-    ReactNode,
-    SetStateAction,
-    useState,
+  Dispatch,
+  PropsWithChildren,
+  ReactNode,
+  SetStateAction,
+  useState,
 } from "react";
 import CollapsibleContent from "./fragments/CollapsibleContent";
+import CollapsibleHeader from "./fragments/CollapsibleHeader";
 import CollapsibleItem from "./fragments/CollapsibleItem";
 import CollapsibleRoot from "./fragments/CollapsibleRoot";
 import CollapsibleTrigger from "./fragments/CollapsibleTrigger";
@@ -32,8 +33,9 @@ export type CollapsibleProps = {
 
 const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
   //State values if not provided by the user
-  const [open, setOpen] = useState(props.open ?? false);
+  const [open, onOpenChange] = useState(props.open ?? true);
 
+  
   // Disable or enable collapse
   const disabled = props.disabled;
 
@@ -43,35 +45,29 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
   // Default Value to show
   const defaultOpen = props.defaultOpen;
 
+  // Onclick Handler
+
   return (
     <CollapsibleRoot
       open={props.open ?? open}
-      onOpenChange={props.onOpenChange ?? setOpen}
+      onOpenChange={props.onOpenChange ?? onOpenChange}
     >
-      <span
-        style={{
-          display: "flex",
-          padding: "8px",
-          width: "full",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        {/* Title */}
-        {title && <p>{title}</p>}
-
+      <CollapsibleHeader title={title}>
         {/* Button */}
         {!disabled && (
-          <CollapsibleTrigger>
+          <CollapsibleTrigger asChild >
             {props.trigger && props.trigger}
+            
           </CollapsibleTrigger>
         )}
-      </span>
+      </CollapsibleHeader>
 
       {/* Conditonal Loop */}
       {disabled ? (
         // loops through all the items with no conditions
-        items.map((item) => <CollapsibleItem>{item.content}</CollapsibleItem>)
+        items.map((item, index) => (
+          <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
+        ))
       ) : (
         <>
           {/* Default value to be shown */}
@@ -80,10 +76,10 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
           )}
           {/* Collapsable Content  */}
           <CollapsibleContent state={props.open ?? open}>
-            {items.map((item) => (
+            {items.map((item, index) => (
               <>
                 {item != defaultOpen && (
-                  <CollapsibleItem>{item.content}</CollapsibleItem>
+                  <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
                 )}
               </>
             ))}

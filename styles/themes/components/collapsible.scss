@@ -1,6 +1,24 @@
 .rad-ui-collapsible-root{
     
     width: 70%;
+
+    .rad-ui-collapsible-header{
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        align-items: center;
+    }
+
+    .rad-ui-collapsible-content{
+        overflow: hidden;
+
+        &[data-state="collapsed"]{
+            // add collapsed styles here
+        }
+        &[data-state="expanded"]{
+            // add expanded styles here
+        }
+    }
     
     .rad-ui-collapsible-trigger{
         display: flex;
