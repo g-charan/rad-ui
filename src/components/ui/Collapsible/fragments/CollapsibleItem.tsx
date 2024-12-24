@@ -8,7 +8,7 @@ type CollapsibleItemProps = {
   
 };
 
-const CollapsibleItem: React.FC<CollapsibleItemProps> = ({
+const CollapsibleItem = ({
   children,
   className = "",
 

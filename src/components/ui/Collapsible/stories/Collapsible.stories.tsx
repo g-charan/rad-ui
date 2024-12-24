@@ -3,11 +3,7 @@ import React, { useState } from "react";
 import SandboxEditor from "~/components/tools/SandboxEditor/SandboxEditor";
 import Collapsible from "~/components/ui/Collapsible/Collapsible";
 import Button from "../../Button/Button";
-import CollapsibleContent from "../fragments/CollapsibleContent";
-import CollapsibleHeader from "../fragments/CollapsibleHeader";
 import CollapsibleItem from "../fragments/CollapsibleItem";
-import CollapsibleRoot from "../fragments/CollapsibleRoot";
-import CollapsibleTrigger from "../fragments/CollapsibleTrigger";
 
 const Items = [
   {
@@ -82,15 +78,15 @@ export const CustomTrigger = () => {
   return (
     <section>
       <SandboxEditor className="">
-        <CollapsibleRoot open={open} onOpenChange={setOpen}>
-          <CollapsibleHeader title="Composable">
-            <CollapsibleTrigger>
+        <Collapsible.Root open={open} onOpenChange={setOpen}>
+          <Collapsible.Header title="Composable">
+            <Collapsible.Trigger>
               <Button style={{ margin: "0" }}>{open ? "CLOSE" : "OPEN"}</Button>
-            </CollapsibleTrigger>
-          </CollapsibleHeader>
-          <CollapsibleItem>{Items[0].content}</CollapsibleItem>
-          <CollapsibleContent>{Items.map((item) => item != Items[0] && <CollapsibleItem>{item.content}</CollapsibleItem>)}</CollapsibleContent>
-        </CollapsibleRoot>
+            </Collapsible.Trigger>
+          </Collapsible.Header>
+          <Collapsible.Item>{Items[0].content}</Collapsible.Item>
+          <Collapsible.Content>{Items.map((item) => item != Items[0] && <CollapsibleItem>{item.content}</CollapsibleItem>)}</Collapsible.Content>
+        </Collapsible.Root>
       </SandboxEditor>
     </section>
   );

@@ -8,7 +8,7 @@ type CollapsibleContentProps = {
     
 }
 
-const CollapsibleContent: React.FC<CollapsibleContentProps> = ({children,className=''}:CollapsibleContentProps) => {
+const CollapsibleContent = ({children,className=''}:CollapsibleContentProps) => {
   
     const {rootClass,open} = useContext(CollapsibleContext)
   

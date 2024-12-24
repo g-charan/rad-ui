@@ -5,11 +5,8 @@ import React, {
   SetStateAction,
   useState,
 } from "react";
-import CollapsibleContent from "./fragments/CollapsibleContent";
-import CollapsibleHeader from "./fragments/CollapsibleHeader";
-import CollapsibleItem from "./fragments/CollapsibleItem";
-import CollapsibleRoot from "./fragments/CollapsibleRoot";
-import CollapsibleTrigger from "./fragments/CollapsibleTrigger";
+
+import CollapsibleComponent from ".";
 
 /*
  * CHECKLIST
@@ -50,44 +47,52 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
   // Onclick Handler
 
   return (
-    <CollapsibleRoot
+    <CollapsibleComponent.Root
       open={props.open ?? open}
       onOpenChange={props.onOpenChange ?? onOpenChange}
       disabled={disabled}
     >
-      <CollapsibleHeader title={title}>
+      <CollapsibleComponent.Header title={title}>
         {/* Button */}
         
-          <CollapsibleTrigger asChild>
+          <CollapsibleComponent.Trigger asChild>
             {props.trigger && props.trigger}
-          </CollapsibleTrigger>
+          </CollapsibleComponent.Trigger>
        
-      </CollapsibleHeader>
+      </CollapsibleComponent.Header>
 
       {/* Conditonal Loop */}
       {disabled ? (
         // loops through all the items with no conditions
         items.map((item, index) => (
-          <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
+          <CollapsibleComponent.Item key={index}>{item.content}</CollapsibleComponent.Item>
         ))
       ) : (
         <>
           {/* Default value to be shown */}
           {defaultPos!=undefined ? items[defaultPos] && (
-            <CollapsibleItem>{items[defaultPos].content}</CollapsibleItem>
+            <CollapsibleComponent.Item>{items[defaultPos].content}</CollapsibleComponent.Item>
           ) : null}
           {/* Collapsable Content  */}
-          <CollapsibleContent>
+          <CollapsibleComponent.Content>
             {items.map((item, index) => (
               defaultPos!=undefined? item !== items[defaultPos] && (
-                <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
-              ) : <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
+                <CollapsibleComponent.Item key={index}>{item.content}</CollapsibleComponent.Item>
+              ) : <CollapsibleComponent.Item key={index}>{item.content}</CollapsibleComponent.Item>
             ))}
-          </CollapsibleContent>
+          </CollapsibleComponent.Content>
         </>
       )}
-    </CollapsibleRoot>
+    </CollapsibleComponent.Root>
   );
 };
+
+
+
+Collapsible.Root = CollapsibleComponent.Root;
+Collapsible.Header = CollapsibleComponent.Header;
+Collapsible.Trigger = CollapsibleComponent.Trigger;
+Collapsible.Content = CollapsibleComponent.Content;
+Collapsible.Item = CollapsibleComponent.Item;
 
 export default Collapsible;
