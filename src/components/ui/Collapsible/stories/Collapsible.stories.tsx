@@ -59,7 +59,6 @@ export const ExternalTrigger = () => {
           title="Quote"
           items={Items}
           defaultOpen={Items[0]}
-          disabled={true}
           trigger={
             <Button  style={{ margin: "0" }}>
               {open ? "CLOSE" : "OPEN"}

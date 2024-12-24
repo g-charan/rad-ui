@@ -10,7 +10,7 @@ import CollapsibleTrigger from "../fragments/CollapsibleTrigger";
 describe("Collapsible Component", () => {
     it("renders without crashing", () => {
         const { getByText } = render(
-            <Collapsible items={[{ content: "Item 1" }]} />
+            <Collapsible items={[{ content: "Item 1" }]} open={true}/>
         );
         expect(getByText("Item 1")).toBeInTheDocument();
     });
@@ -35,9 +35,9 @@ describe("Collapsible Component", () => {
         );
         const trigger = getByText("Toggle");
         fireEvent.click(trigger);
-        expect(queryByText("Item 1")).not.toBeInTheDocument();
-        fireEvent.click(trigger);
         expect(queryByText("Item 1")).toBeInTheDocument();
+        fireEvent.click(trigger);
+        expect(queryByText("Item 1")).not.toBeInTheDocument();
     });
 
     it("disables collapsible when disabled prop is true", () => {

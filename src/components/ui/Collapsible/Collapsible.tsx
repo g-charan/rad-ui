@@ -33,7 +33,7 @@ export type CollapsibleProps = {
 
 const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
   //State values if not provided by the user
-  const [open, onOpenChange] = useState(props.open ?? true);
+  const [open, onOpenChange] = useState(props.open ?? false);
 
   
   // Disable or enable collapse
@@ -56,9 +56,8 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
       <CollapsibleHeader title={title}>
         {/* Button */}
         
-          <CollapsibleTrigger asChild >
+          <CollapsibleTrigger asChild>
             {props.trigger && props.trigger}
-            
           </CollapsibleTrigger>
        
       </CollapsibleHeader>
