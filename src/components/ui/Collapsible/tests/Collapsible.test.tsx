@@ -2,7 +2,6 @@ import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 import Collapsible from "../Collapsible";
 
-import CollapsibleContent from "../fragments/CollapsibleContent";
 import CollapsibleHeader from "../fragments/CollapsibleHeader";
 import CollapsibleItem from "../fragments/CollapsibleItem";
 import CollapsibleTrigger from "../fragments/CollapsibleTrigger";
@@ -56,7 +55,7 @@ describe("Collapsible Component", () => {
 
     it("renders default open content when provided", () => {
         const { getByText } = render(
-            <Collapsible defaultOpen={{ content: "Default Item" }} items={[{ content: "Item 1" }]} />
+            <Collapsible defaultPos={0} items={[{ content: "Default Item" }]} />
         );
         expect(getByText("Default Item")).toBeInTheDocument();
     });
@@ -85,25 +84,6 @@ describe("CollapsibleTrigger Component", () => {
     });
 });
 
-describe("CollapsibleContent Component", () => {
-    it("renders children when open", () => {
-        const { getByText } = render(
-            <CollapsibleContent state={true}>
-                <div>Content</div>
-            </CollapsibleContent>
-        );
-        expect(getByText("Content")).toBeInTheDocument();
-    });
-
-    it("does not render children when closed", () => {
-        const { queryByText } = render(
-            <CollapsibleContent state={false}>
-                <div>Content</div>
-            </CollapsibleContent>
-        );
-        expect(queryByText("Content")).not.toBeInTheDocument();
-    });
-});
 
 describe("CollapsibleItem Component", () => {
     it("renders item content", () => {

@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import SandboxEditor from "~/components/tools/SandboxEditor/SandboxEditor";
 import Collapsible from "~/components/ui/Collapsible/Collapsible";
 import Button from "../../Button/Button";
+import CollapsibleContent from "../fragments/CollapsibleContent";
+import CollapsibleHeader from "../fragments/CollapsibleHeader";
+import CollapsibleItem from "../fragments/CollapsibleItem";
+import CollapsibleRoot from "../fragments/CollapsibleRoot";
+import CollapsibleTrigger from "../fragments/CollapsibleTrigger";
 
 const Items = [
   {
@@ -58,7 +63,7 @@ export const ExternalTrigger = () => {
           onOpenChange={setOpen}
           title="Quote"
           items={Items}
-          defaultOpen={Items[0]}
+          defaultPos={0}
           trigger={
             <Button  style={{ margin: "0" }}>
               {open ? "CLOSE" : "OPEN"}
@@ -69,3 +74,24 @@ export const ExternalTrigger = () => {
     </section>
   );
 };
+
+
+export const CustomTrigger = () => {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <section>
+      <SandboxEditor className="">
+        <CollapsibleRoot open={open} onOpenChange={setOpen}>
+          <CollapsibleHeader title="Composable">
+            <CollapsibleTrigger>
+              <Button style={{ margin: "0" }}>{open ? "CLOSE" : "OPEN"}</Button>
+            </CollapsibleTrigger>
+          </CollapsibleHeader>
+          <CollapsibleItem>{Items[0].content}</CollapsibleItem>
+          <CollapsibleContent>{Items.map((item) => item != Items[0] && <CollapsibleItem>{item.content}</CollapsibleItem>)}</CollapsibleContent>
+        </CollapsibleRoot>
+      </SandboxEditor>
+    </section>
+  );
+}

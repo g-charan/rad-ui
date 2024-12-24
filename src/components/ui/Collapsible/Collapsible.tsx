@@ -27,7 +27,7 @@ export type CollapsibleProps = {
   trigger?: ReactNode;
   items: { content: string | ReactNode }[];
   disabled?: boolean;
-  defaultOpen?: { content: string | ReactNode };
+  defaultPos?: number;
   onOpenChange?: Dispatch<SetStateAction<boolean>>;
 } & PropsWithChildren;
 
@@ -43,7 +43,9 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
   const title = props.title;
 
   // Default Value to show
-  const defaultOpen = props.defaultOpen;
+  const defaultPos = props.defaultPos;
+
+
 
   // Onclick Handler
 
@@ -71,15 +73,15 @@ const Collapsible = ({ children, items, ...props }: CollapsibleProps) => {
       ) : (
         <>
           {/* Default value to be shown */}
-          {defaultOpen && (
-            <CollapsibleItem>{defaultOpen.content}</CollapsibleItem>
-          )}
+          {defaultPos!=undefined ? items[defaultPos] && (
+            <CollapsibleItem>{items[defaultPos].content}</CollapsibleItem>
+          ) : null}
           {/* Collapsable Content  */}
-          <CollapsibleContent state={props.open ?? open}>
+          <CollapsibleContent>
             {items.map((item, index) => (
-              item !== defaultOpen && (
+              defaultPos!=undefined? item !== items[defaultPos] && (
                 <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
-              )
+              ) : <CollapsibleItem key={index}>{item.content}</CollapsibleItem>
             ))}
           </CollapsibleContent>
         </>
